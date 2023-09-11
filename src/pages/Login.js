@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("https://backend-3aqf.onrender.com/api/auth/login", {
+      const res = await axios.post("http://localhost:5050/api/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
