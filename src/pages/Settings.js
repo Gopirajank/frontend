@@ -13,7 +13,7 @@ export default function Settings() {
   const [success, setSuccess] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5050/images/";
+  const PF = "https://backend-3aqf.onrender.com/images/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export default function Settings() {
       data.append("file", file);
       updatedUser.profilePic = filename;
       try {
-        await axios.post("http://localhost:5050/api/upload", data);
+        await axios.post("https://backend-3aqf.onrender.com/api/upload", data);
       } catch (err) {
         console.error(err);
       }
