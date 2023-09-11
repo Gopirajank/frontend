@@ -8,6 +8,7 @@ import ReactQuill from "react-quill";
 import ReactMarkdown from "react-markdown";
 import "react-quill/dist/quill.snow.css";
 import { Remarkable } from 'remarkable';
+import { useNavigate} from "react-router-dom";
 
 
 const SinglePost = () => {
@@ -19,10 +20,11 @@ const SinglePost = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get("http://localhost:5050/api/posts/" + path);
+      const res = await axios.get("https://backend-3aqf.onrender.com/api/posts/" + path);
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
@@ -32,10 +34,10 @@ const SinglePost = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5050/api/posts/${post._id}`, {
+      await axios.delete(`https://backend-3aqf.onrender.com/api/posts/${post._id}`, {
         data: { username: user.username },
       });
-      window.location.replace("/");
+      navigate("/");
     } catch (err) {}
   };
 
@@ -45,7 +47,7 @@ const SinglePost = () => {
       const markdownToHtml = new Remarkable();
       const htmlContent = markdownToHtml.render(desc);
 
-      await axios.put(`http://localhost:5050/api/posts/${post._id}`, {
+      await axios.put(`https://backend-3aqf.onrender.com/api/posts/${post._id}`, {
         username: user.username,
         title,
         desc: htmlContent, // Set the HTML content

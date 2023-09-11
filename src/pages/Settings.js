@@ -17,6 +17,8 @@ export default function Settings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted");
+    console.log("User ID:", user._id);
     dispatch({ type: "UPDATE_START" });
     const updatedUser = {
       userId: user._id,
@@ -37,12 +39,13 @@ export default function Settings() {
       }
     }
     try {
-      const res = await axios.put("https://backend-3aqf.onrender.com/api/users/" + user._id, updatedUser);
+       const res = await axios.put("https://backend-3aqf.onrender.com/api/users/" + user._id, updatedUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {
-      console.error(err);
-      dispatch({ type: "UPDATE_FAILURE" });
+      console.error('Error:', err);
+      console.log('Response Status:', err.response.status);
+      dispatch({ type: "UPDATE_FAILURE" })
     }
   };
 
@@ -51,7 +54,6 @@ export default function Settings() {
       <div className="settingsWrapper">
         <div className="settingsTitle">
           <span className="settingsUpdateTitle">Update Your Account</span>
-          <span className="settingsDeleteTitle">Delete Account</span>
         </div>
         <form className="settingsForm" onSubmit={handleSubmit}>
           <label>Profile Picture</label>
